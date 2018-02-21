@@ -1,0 +1,195 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx}  %,overpic}
+\usepackage{hyperref}
+\usepackage{bm}
+
+
+\pdfinfo{
+  /Title (example.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Seamus)
+  /Subject (Example)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+%\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+%                                {-1ex plus -.5ex minus -.2ex}%
+%                                {0.5ex plus .2ex}%x
+%                                {\normalfont\large\bfseries}}
+%\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+%                                {-1explus -.5ex minus -.2ex}%
+%                                {0.5ex plus .2ex}%
+%                                {\normalfont\normalsize\bfseries}}
+%\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+%                                {-1ex plus -.5ex minus -.2ex}%
+%                                {1ex plus .2ex}%
+%                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\raggedright
+\footnotesize
+%\begin{multicols}{3}
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\subsection{\underline{Kinematics}}
+
+\everymath{\displaystyle}
+
+Basic Kinematic Eq:
+$\frac{d}{dt} \bm f = \big[ (\frac{d}{dt})_{rot} + \bm\omega \times \big] \bm f$
+
+Newton's 2nd law:
+$\sum \bm F = \frac{d(m \bm v)}{dt}$
+
+$\sum \bm F = m \bm a$ \quad in inertial frame
+
+$\sum \bm M = 
+\dot{\bm I} \bm\omega + \bm I \dot{\bm\omega} + \bm\omega \times \bm I \bm\omega$
+\quad in body axes, about c.g.
+
+$
+\dot{
+\begin{bmatrix} \bm r \\ \bm v \\ \bm q \\ \bm \omega \end{bmatrix}}_{13\times1}
+=
+\begin{bmatrix} \bm v \\ \frac{1}{m} \sum \bm F 
+\\ \frac{1}{2} \bm q \begin{bmatrix} 0 \\ \bm\omega \end{bmatrix}_{quat}
+\\ \bm I^{-1}(\sum \bm M - \dot{\bm I} \bm\omega - \bm\omega \times \bm I \bm\omega 
+\end{bmatrix}
+$
+
+\subsection{\underline{Orbits}}
+
+Variation of parameters: 
+$\frac{d\alpha}{dt} = \frac{\partial\alpha}{\partial v} a_d$
+for orbit element $\alpha$
+
+\subsection{\underline{Math}}
+
+chain rule: for $F(x)=f(g(x))$, $F'(x)=f'(g(x))g'(x)$
+or $\frac{\partial y}{\partial x_i} = 
+\sum_{l=1}^{m} \frac{\partial y}{\partial u_l}\frac{\partial u_l}{\partial x_i}$
+
+integration by parts: $\int_{a}^{b} u v' = [uv]_{a}^{b} - \int_{a}^{b} u'v$
+
+fundamental lemma of calc of variations:
+if $\int_{a}^{b}f(x)h(x) = 0$ for any compactly smooth $h(x)$, then $f(x)=0$
+
+
+\subsection{\underline{Guidance}}
+
+From optimization problem:
+
+$
+\begin{aligned}
+& \underset{x, u, t_0 \rightarrow t_1}{\text{minimize}}
+& & h(t_1, x) \quad \text{cost function} \\
+& \text{subject to}
+& & \dot{x} = f(x, u) \quad \text{dynamics constraints} \\
+&&& \Phi(t_1, x) = 0 \quad \text{terminal constraints}
+\end{aligned}
+$
+
+optimality conditions are:
+$(1)\ \lambda^T(t) \frac{\partial f}{\partial u} = 0$ \quad
+$(2)\ \dot{\lambda}(t) = \lambda^T(t) \frac{\partial f}{\partial x}$ \quad
+$(3)\ \frac{\partial h}{\partial x}\Big|_{t_1} + 
+\Lambda^T \frac{\partial \Phi}{\partial x}\Big|_{t_1} - 
+\lambda(t_1) = 0$
+
+2D flat Earth $\Leftrightarrow$ 2D curved Earth in rotating frame
+
+For uniform gravity:
+$x = \begin{bmatrix} r_x \\ r_y \\ v_x \\ v_y \end{bmatrix}$,
+$u = \begin{bmatrix} \theta \end{bmatrix}$,
+$\dot{x} = f(x, u) = 
+\begin{bmatrix} v_x \\ v_y \\ a_T(t)\cos\theta \\ a_T(t)\sin\theta - g
+\end{bmatrix}$;
+$(1) \& (2) \Rightarrow$
+$\tan\theta = \frac{c_2 t + c_4}{c_1 t + c_3}$
+for any $\Phi$ or $h$
+
+$
+\tan\theta = \left\{
+\begin{matrix}
+\frac{c_4}{c_3} & & v_x, v_y &
+  \text{yaw steering of inclination only} \\
+\frac{c_2 t + c_4}{c_3} & \text{if constraining} & r_y, v_x, v_y &
+  \text{pitch steering (w/o downrange), yaw steering in insertion plane} \\
+\frac{c_2 t + c_4}{c_1 t + c_3} & & r_x, r_y, v_x, v_y &
+  \text{yaw steering in local North frame, lunar landing}
+\end{matrix}
+\right.
+$
+
+For inverse square gravity:
+$x = \begin{bmatrix} r_x \\ r_y \\ v_x \\ v_y \end{bmatrix}$,
+$u = \begin{bmatrix} \theta \end{bmatrix}$,
+$\dot{x} = f(x, u) = 
+\begin{bmatrix} v_x \\ v_y \\ a_T(t)\cos\theta \\ 
+a_T(t)\sin\theta - \frac{GM}{{r_y}^2} \end{bmatrix}$;
+$(1) \& (2) \Rightarrow$
+$\tan\theta = \frac{1}{\gamma}\frac{c_2 e^{\gamma t}+c_4 e^{-\gamma t}}{c_1 t + c_3}$
+with $\gamma = \sqrt{\frac{2GM}{{r_y}^3}}$ 
+for any $\Phi$ or $h$
+
+%$
+%\tan\theta =
+%\begin{cases}
+%\frac{c_4}{c_3} & \text{constraining}\ v_x, v_y \\
+%\frac{c_2 t + c_4}{c_3} & \text{constrainging}\ r_y, v_x, v_y \\
+%\frac{c_2 t + c_4}{c_1 t + c_3} & \text{constraining}\ r_x, r_y, v_x, v_y
+%\end{cases}
+%$
+
+% You can even have references
+%\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+%\end{multicols}
+\end{document}
