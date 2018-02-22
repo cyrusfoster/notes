@@ -1,4 +1,4 @@
-\documentclass[10pt,landscape]{article}
+\documentclass[11pt,landscape]{article}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -7,14 +7,19 @@
 \usepackage{color,graphicx}  %,overpic}
 \usepackage{hyperref}
 \usepackage{bm}
+\usepackage{gensymb}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{import}
 
 
 \pdfinfo{
-  /Title (example.pdf)
+  /Title (notes.pdf)
   /Creator (TeX)
   /Producer (pdfTeX 1.40.0)
-  /Author (Seamus)
-  /Subject (Example)
+  /Author ()
+  /Subject (Astrodynamics Notes)
   /Keywords (pdflatex, latex,pdftex,tex)}
 
 % This sets page margins to .5 inch if using letter paper, and to 1cm
@@ -26,6 +31,7 @@
         {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
         {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
     }
+
 
 % Turn off header and footer
 \pagestyle{empty}
@@ -64,6 +70,7 @@
 \renewcommand{\baselinestretch}{1.5}
 
 \begin{document}
+\linespread{2}
 \raggedright
 \footnotesize
 %\begin{multicols}{3}
@@ -76,7 +83,323 @@
 \setlength{\multicolsep}{1pt}
 \setlength{\columnsep}{2pt}
 
-\subsection{\underline{Kinematics}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define norm
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+% Define \dotp to be dot product symbol
+\makeatletter
+\newcommand*\dotp{\mathpalette\dotp@{.5}}
+\newcommand*\dotp@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Math}}
+
+Ellipse:
+$
+e = \sqrt{1-\frac{b^2}{a^2}}
+\quad
+b = a\sqrt{1-e^2}
+\quad
+f = 1 - \frac{b}{a}
+\quad
+e^2 = 2f - f^2
+$
+
+Probability: 
+OR: add probabilities
+AND: multiply probabilities
+$P_{collision-total} = 1 - \sum_{i=1}^{n}(1-P_{collision-i})$
+
+$
+\sigma
+= \text{stddev}
+= \text{RMS}
+= \sqrt{\text{variance}}
+$
+
+Pythagore ($C=\frac{\pi}{2}$):
+$c^2 = a^2 + b^2
+\quad$
+Spherical:
+$\cos{c} = \cos{a}\cos{b}$
+
+Law of cosines:
+$
+c^2 = a^2 + b^2 - 2ab\cos{\gamma}
+\quad
+$
+Spherical:
+$
+\cos{c} = \cos{a}\cos{b} + \sin{a}\sin{b}\cos{C}
+$
+
+Law of sines:
+$
+\frac{a}{\sin{A}} =
+\frac{b}{\sin{B}} =
+\frac{c}{\sin{C}}
+$
+
+$
+\cos^{-1} \in [0; \pi]
+\quad
+\sin^{-1} \in [-\frac{\pi}{2}; \frac{\pi}{2}]
+$
+
+$
+\mathbf{a} \dotp \mathbf{b} = a b \cos{\theta}
+\quad
+\lVert \mathbf{a} \times \mathbf{b} \rVert = a b \sin{\theta}
+\quad
+\theta = \cos^{-1}({\frac{\mathbf{a} \dotp \mathbf{b}}{ab}}) \in [0; \pi]
+\quad
+$
+for sign bit:
+$
+\text{sign}( \mathbf{N} \dotp (\mathbf{a} \times \mathbf{b})) \in [-\pi; \pi]
+$
+($\mathbf{N}$ being the reference "North Pole")
+
+Projection of $\bm A$ on $\bm B$:
+$proj(\bm A \rightarrow \bm B) = \frac{\bm A \dotp \bm B}{\bm B \dotp \bm B} \bm B$
+\quad
+$\norm{proj(\bm A \rightarrow \bm B)} = \frac{\bm A \dotp \bm B}{\norm{B}}$
+\quad
+Projection of $\bm A$ on plane defined by normal $\bm N$:
+$\bm A - proj(\bm A \rightarrow \bm N)$
+
+Quadratic:
+$
+ax^2 + bx + c = 0
+\quad
+\Delta = b^2 - 4ac
+\quad
+x = \frac{-b \pm \sqrt{\Delta}}{2a}
+$
+
+$
+\begin{matrix}
+\text{Least-squares} & \text{skinny A} & \text{min} \norm{Ax-y} & x = (A^TA)^{-1}A^Ty \\
+\text{Least-norm} & \text{fat A} & \text{min} \norm{x}_{y=Ax} & x = A^T(AA^T)^{-1}y \\
+	&  & \text{min}\norm{Ax-b}_{Cx=d} & 
+	\begin{bmatrix} x \\ \lambda \end{bmatrix} =
+	\begin{bmatrix} A^TA & C^T \\ C & 0 \end{bmatrix}^{-1}
+	\begin{bmatrix} A^Tb \\ d \end{bmatrix}
+\end{matrix}
+$
+
+With rotation vector R:
+$X^\prime = RX \quad C^\prime = RCR^T$
+
+Tayload expansion:
+$
+f(x) = f(a) + f'(a)(x-a) + \frac{1}{2}f''(a)(x-a)^2 + HOT
+$
+
+Chain rule: for $F(x)=f(g(x))$, $F'(x)=f'(g(x))g'(x)$
+or $\frac{\partial y}{\partial x_i} = 
+\sum_{l=1}^{m} \frac{\partial y}{\partial u_l}\frac{\partial u_l}{\partial x_i}$
+
+Integration by parts: $\int_{a}^{b} u v' = [uv]_{a}^{b} - \int_{a}^{b} u'v$
+
+Fundamental lemma of calc of variations:
+if $\int_{a}^{b}f(x)h(x) = 0$ for any compactly smooth $h(x)$, then $f(x)=0$
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Orbits}}
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+\resizebox{0.25\textwidth}{!}{\import{svg/}{hyperbolic.pdf_tex}}
+\end{wrapfigure}
+
+Specific energy:
+$
+E_y 
+= \dfrac{v^2}{2} - \dfrac{\mu}{r} 
+= -\dfrac{\mu}{2a} 
+= \dfrac{v_{\infty}^2}{2} 
+= \dfrac{C3}{2}
+\quad
+\alpha
+= \dfrac{1}{a}
+= \dfrac{2}{r} - \dfrac{v^2}{\mu}
+= -\dfrac{v_{\infty}^2}{\mu}
+= \dfrac{2}{r_p+r_a}
+\quad
+C3 = -\mu\alpha
+$
+
+Along-track maneuver:
+\quad
+Impulsive:
+$\Delta x = 3 \Delta V \Delta t$
+\quad
+Low-thrust:
+$
+\Delta x 
+= \dfrac{3}{2} \Delta V \Delta t 
+= \dfrac{3}{2} a {\Delta t}^2
+= \dfrac{3}{2} a \Delta t_{thrust} ( 2\Delta t_{total} - \Delta t_{thurst} )
+$
+
+Angular momentum:
+$
+h
+=\norm{R \times V}
+=rv \cos \phi
+=rv \sin \gamma
+=r_p v_p
+=r_a v_a
+=\sqrt{\mu p}
+=r^2 \dot{\nu}
+$
+
+Eccentricity:
+$
+e 
+=1-\dfrac{r_p}{a}
+=\dfrac{r_a}{a}-1
+=\dfrac{r_a-r_p}{r_a+r_p}
+=\sqrt{1+\dfrac{2 E_y h^2}{\mu^2}}
+=\sqrt{1-\dfrac{\alpha h^2}{\mu}}
+=\sqrt{1-\alpha p}
+\quad
+\vec{e} = \dfrac{1}{\mu} 
+\big[ (v^2-\dfrac{\mu}{r})\vec{r} - (\vec{r} \cdot \vec{v})\vec{v} \big]
+$
+
+$
+r_p = a(1-e)
+\quad
+r_a = a(1+e)
+\quad
+p 
+= a(1-e^2)
+= \dfrac{h^2}{\mu}
+= \dfrac{(r_p r_a)^2}{\mu}
+$
+
+Period:
+$
+T=2\pi\sqrt{\dfrac{a^3}{\mu}}
+\Leftrightarrow
+a = \sqrt[3]{\mu \big( \dfrac{T}{2\pi} \big)^2} 
+\quad
+\omega 
+= \dfrac{2\pi}{T}
+= \sqrt{\dfrac{\mu}{a^3}}
+= n
+\quad
+T_{syn}=\dfrac{1}{\big| \dfrac{1}{T_1} - \dfrac{1}{T_2} \big|}
+\quad
+\Delta t \approx \dfrac{r^2 \Delta\nu}{h}$ for small $\Delta\nu$
+
+Anomaly:
+$
+r = \dfrac{p}{1+e\cos\nu} = a(1-e\cos E)
+\quad
+\cos\nu = \dfrac{1}{e} \big( \dfrac{p}{r}-1 \big)
+\quad
+\cos E = \dfrac{1}{e} \big( 1- \dfrac{r}{a} \big)
+= \dfrac{e+\cos\nu}{1+e\cos\nu}
+\quad
+\dot{r} = \dfrac{\sqrt{\mu p} e \sin\nu}{r(1+e\cos\nu)}
+\quad$
+
+Arg of lat: $u = \nu + \omega$
+$\quad$
+Hyperbolic:
+$
+\sin \frac{\delta}{2} = \frac{1}{e}
+\quad
+\Delta = \frac{\mu \sqrt{e^2 - 1}}{v_{\infty}^2}
+$
+
+Speed:
+$
+v_{circ}=\sqrt{\dfrac{\mu}{r}}
+\quad
+v_{esc}=\sqrt{\dfrac{2\mu}{r}}
+\quad
+v
+= \sqrt{2 \big( \dfrac{\mu}{r} + E_y \big) }
+= \sqrt{2\mu \big( \dfrac{1}{r} - \dfrac{1}{2a} \big) }
+= \sqrt{\mu \big( \dfrac{2}{r} - \alpha \big) }
+$
+
+Plane change:
+$
+\Delta V = 2 v \sin \big( \dfrac{\theta}{2} \big)
+\quad
+\theta = 2 sin^{-1} \big( \dfrac{\Delta V}{2v} \big)
+$
+
+J2:
+$
+\dot{\Omega} = - \dfrac{3 n R_E^2 J_2}{2 p^2} \cos i
+\Leftrightarrow
+\cos i = - \dfrac{2 p^2 \dot{\Omega}}{3 n R_E^2 J_2}
+\quad
+\dot{\omega} = \dfrac{3 n R_E^2 J_2}{4 p^2} \big( 4 - 5 sin^2 i \big)
+$
+
+TOF:
+$
+\Delta M = n \Delta t
+\quad
+\Delta t = t - t_0
+= \sqrt{\dfrac{a^3}{\mu}} \big[ 2 k \pi + (E-e\sin E) - (E_0-e\sin E_0) \big]
+= \sqrt{\dfrac{(-a)^3}{\mu}} \big[ (e\sinh F - F) - (e\sinh F_0 - F_0) \big]
+$
+
+3D:
+$
+\vec{R} = r \begin{bmatrix} \cos\nu & \sin\nu & 0 \end{bmatrix}^T
+\quad
+\vec{V} = \dfrac{\mu}{p} \begin{bmatrix} -\sin\nu & e+\cos\nu & 0 \end{bmatrix}^T
+$
+
+Drag:
+$
+BC = \dfrac{m}{C_D A}
+\quad
+acc_{Drag} = \dfrac{\rho v^2}{2 BC}
+\quad
+\dfrac{da}{dt} = -2 \sqrt{\dfrac{a^3}{GM}} acc_{Drag}
+$
+
+Constants: 
+$
+r_{Earth} = 6,378.137 $ km$
+\quad
+r_{GEO} = 42,164 $ km$
+\quad
+h_{GEO} = 35,786 $ km$
+\quad
+sma_{Moon} = 384,400 $ km$
+\quad
+$
+Ecliptic $\rightarrow$ Equatorial: $rot_x( \epsilon = 23.44\degree )$
+
+
+Variation of parameters: 
+$\frac{d\alpha}{dt} = \frac{\partial\alpha}{\partial v} a_d$
+for orbit element $\alpha$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Equations of motion}}
 
 \everymath{\displaystyle}
 
@@ -102,24 +425,8 @@ $
 \end{bmatrix}
 $
 
-\subsection{\underline{Orbits}}
-
-Variation of parameters: 
-$\frac{d\alpha}{dt} = \frac{\partial\alpha}{\partial v} a_d$
-for orbit element $\alpha$
-
-\subsection{\underline{Math}}
-
-chain rule: for $F(x)=f(g(x))$, $F'(x)=f'(g(x))g'(x)$
-or $\frac{\partial y}{\partial x_i} = 
-\sum_{l=1}^{m} \frac{\partial y}{\partial u_l}\frac{\partial u_l}{\partial x_i}$
-
-integration by parts: $\int_{a}^{b} u v' = [uv]_{a}^{b} - \int_{a}^{b} u'v$
-
-fundamental lemma of calc of variations:
-if $\int_{a}^{b}f(x)h(x) = 0$ for any compactly smooth $h(x)$, then $f(x)=0$
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \subsection{\underline{Guidance}}
 
 From optimization problem:
@@ -177,14 +484,6 @@ $\tan\theta = \frac{1}{\gamma}\frac{c_2 e^{\gamma t}+c_4 e^{-\gamma t}}{c_1 t + 
 with $\gamma = \sqrt{\frac{2GM}{{r_y}^3}}$ 
 for any $\Phi$ or $h$
 
-%$
-%\tan\theta =
-%\begin{cases}
-%\frac{c_4}{c_3} & \text{constraining}\ v_x, v_y \\
-%\frac{c_2 t + c_4}{c_3} & \text{constrainging}\ r_y, v_x, v_y \\
-%\frac{c_2 t + c_4}{c_1 t + c_3} & \text{constraining}\ r_x, r_y, v_x, v_y
-%\end{cases}
-%$
 
 % You can even have references
 %\rule{0.3\linewidth}{0.25pt}
