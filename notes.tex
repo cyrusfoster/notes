@@ -100,6 +100,18 @@
 \newpage
 \subsection{\underline{Math}}
 
+\begin{wrapfigure}{r}{0.25\textwidth}
+\resizebox{0.2\textwidth}{!}{\import{svg/}{cos_sin.pdf_tex}}
+
+\quad
+
+\import{svg/}{angle_wedge.pdf_tex}
+
+\quad
+
+\import{svg/}{tangential_speed.pdf_tex}
+\end{wrapfigure}
+
 Ellipse:
 $
 e = \sqrt{1-\frac{b^2}{a^2}}
@@ -170,7 +182,7 @@ Projection of $\bm A$ on $\bm B$:
 $proj(\bm A \rightarrow \bm B) = \frac{\bm A \dotp \bm B}{\bm B \dotp \bm B} \bm B$
 \quad
 $\norm{proj(\bm A \rightarrow \bm B)} = \frac{\bm A \dotp \bm B}{\norm{B}}$
-\quad
+
 Projection of $\bm A$ on plane defined by normal $\bm N$:
 $\bm A - proj(\bm A \rightarrow \bm N)$
 
@@ -185,7 +197,9 @@ $
 
 $
 \begin{matrix}
-\text{Least-squares} & \text{skinny A} & \text{min} \norm{Ax-y} & x = (A^TA)^{-1}A^Ty \\
+\text{Least-squares} & \text{skinny A} & \text{min} \norm{Ax-y} & 
+	\begin{matrix} x = (A^TA)^{-1}A^Ty \\ x = (A^TWA)^{-1}A^TWy \end{matrix} &
+	W_{ii}=\frac{1}{\sigma_{ii}^2} \quad \text{cov} = P = (A^TWA)^{-1} \\
 \text{Least-norm} & \text{fat A} & \text{min} \norm{x}_{y=Ax} & x = A^T(AA^T)^{-1}y \\
 	&  & \text{min}\norm{Ax-b}_{Cx=d} & 
 	\begin{bmatrix} x \\ \lambda \end{bmatrix} =
@@ -201,6 +215,11 @@ Tayload expansion:
 $
 f(x) = f(a) + f'(a)(x-a) + \frac{1}{2}f''(a)(x-a)^2 + HOT
 $
+
+Derivatives:
+$(fg)^\prime = f^\prime g + fg^\prime$
+\quad
+$\big( \frac{f}{g} \big)^\prime = \frac{f^\prime g - fg^\prime}{g^2}$
 
 Chain rule: for $F(x)=f(g(x))$, $F'(x)=f'(g(x))g'(x)$
 or $\frac{\partial y}{\partial x_i} = 
