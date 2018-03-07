@@ -128,6 +128,9 @@ OR: add probabilities
 AND: multiply probabilities
 $P_{collision-total} = 1 - \sum_{i=1}^{n}(1-P_{collision-i})$
 
+Monte Carlo with $n$ runs \& confidence interval $c_i$:
+$p = c_i^{\frac{1}{n}} \quad n = \frac{\ln c_i}{\ln p}$ (0 failures)
+
 $
 \sigma
 = \text{stddev}
@@ -444,6 +447,31 @@ $
 \end{bmatrix}
 $
 
+Rocket equation:
+$\Delta V = I_{sp} g_0 \ln\frac{m_0}{m_1}
+\quad
+m_1 = m_0 e^{-\frac{\Delta V}{I_{sp}g_0}}
+\quad
+t_{\text{burn}}=\frac{m_0-m_1}{\dot{m}}$
+
+Impulse:
+$I = T \Delta t
+\quad
+\Delta V = \frac{I}{m}
+\quad
+m_f = \frac{I}{I_{sp}g_0}
+$
+
+EP:
+$T = \frac{2\eta P}{I_{sp}g_0}$
+
+Thrust:
+$T = \dot{m}V_e + (P_{\text{exit}} - P_{\text{ambient}})A_{\text{exit}}
+\quad
+V_e = I_{sp} g_0
+$
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \subsection{\underline{Guidance}}
@@ -503,6 +531,30 @@ $\tan\theta = \frac{1}{\gamma}\frac{c_2 e^{\gamma t}+c_4 e^{-\gamma t}}{c_1 t + 
 with $\gamma = \sqrt{\frac{2GM}{{r_y}^3}}$ 
 for any $\Phi$ or $h$
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Time}}
+
+$\text{TAI} = \text{TT} - 32.184s$
+
+$\text{GPS} = \text{TT} - 51.184s$
+
+UT1: smooth, matches Earth's rotation
+
+UTC: Use SI seconds and approximates UT1 with leapseconds
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Estimation}}
+
+KF
+
+EKF
+
+UKF
 
 % You can even have references
 %\rule{0.3\linewidth}{0.25pt}
