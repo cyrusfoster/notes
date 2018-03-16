@@ -128,8 +128,9 @@ OR: add probabilities
 AND: multiply probabilities
 $P_{collision-total} = 1 - \sum_{i=1}^{n}(1-P_{collision-i})$
 
-Monte Carlo with $n$ runs \& confidence interval $c_i$:
-$p = c_i^{\frac{1}{n}} \quad n = \frac{\ln c_i}{\ln p}$ (0 failures)
+MC run with $n$ samples, failure $p$ \& consumer risk $c_r$:
+$c_r = \sum_{i=0}^{k} {n \choose i} p^i (1-p)^{n-i}$ (k failures)
+$\quad p = 1-c_r^{\frac{1}{n}} \quad n = \frac{\ln c_r}{\ln (1-p)}$ (0 failures)
 
 $
 \sigma
@@ -544,6 +545,27 @@ $\text{GPS} = \text{TT} - 51.184s$
 UT1: smooth, matches Earth's rotation
 
 UTC: Use SI seconds and approximates UT1 with leapseconds
+
+
+\subsection{\underline{Frames}}
+
+$\text{J2000} \approx \text{ICRF}$
+
+$\text{ECEF} \Leftrightarrow \text{ITRF} \approx \text{ITRS}$
+
+TEME
+
+
+\subsection{\underline{Matrix}}
+
+\begin{tabular}{ l l l }
+Decomposition & Speed & Requirements \\
+\hline
+LU (gauss-jordan) & $0(\frac{2}{3}n^3)$ & invertible (square) \\ 
+QR & $0(\frac{4}{3}n^3)$ & none \\  
+Cholesky &  & $\pm$ definite \\
+SVD & $0(7n^3)$ & none    
+\end{tabular}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
