@@ -578,6 +578,37 @@ SVD & $0(7n^3)$ & none
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
+\subsection{\underline{Optimization}}
+
+\text{min} f(x) \text{subject to} c(x)=0
+
+$
+\begin{matrix}
+
+ & \text{iterate by solving} & \text{equivalent to finding} \\
+
+n_x = n_c & c_x \Delta x = -c &
+\text{roots of } c(x)\\
+
+n_x > n_c & 
+\begin{bmatrix} 
+f_{xx} + (\lambda^T c)_{xx} & {c_x}^T \\ c_x & 0
+\end{bmatrix} 
+\begin{bmatrix} 
+\Delta x \\ \Delta \lambda
+\end{bmatrix} 
+= -
+\begin{bmatrix} 
+f_x + (\lambda^T c)_x \\ c
+\end{bmatrix} 
+&
+\text{saddle point of Lagrangian } L = f(x)+\lambda^T c(x)
+
+\end{matrix}
+$
+
+
+
 \subsection{\underline{Estimation}}
 
 KF
