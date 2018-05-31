@@ -199,19 +199,6 @@ ax^2 + bx + c = 0
 x = \frac{-b \pm \sqrt{\Delta}}{2a}
 $
 
-$
-\begin{matrix}
-\text{Least-squares} & \text{skinny A} & \text{min} \norm{Ax-y} & 
-	\begin{matrix} x = (A^TA)^{-1}A^Ty \\ x = (A^TWA)^{-1}A^TWy \end{matrix} &
-	W_{ii}=\frac{1}{\sigma_{ii}^2} \quad \text{cov} = P = (A^TWA)^{-1} \\
-\text{Least-norm} & \text{fat A} & \text{min} \norm{x}_{y=Ax} & x = A^T(AA^T)^{-1}y \\
-	&  & \text{min}\norm{Ax-b}_{Cx=d} & 
-	\begin{bmatrix} x \\ \lambda \end{bmatrix} =
-	\begin{bmatrix} A^TA & C^T \\ C & 0 \end{bmatrix}^{-1}
-	\begin{bmatrix} A^Tb \\ d \end{bmatrix}
-\end{matrix}
-$
-
 With rotation vector R:
 $X^\prime = RX \quad C^\prime = RCR^T$
 
@@ -234,7 +221,11 @@ Integration by parts: $\int_{a}^{b} u v' = [uv]_{a}^{b} - \int_{a}^{b} u'v$
 Fundamental lemma of calc of variations:
 if $\int_{a}^{b}f(x)h(x) = 0$ for any compactly smooth $h(x)$, then $f(x)=0$
 
-
+Solve ODE with Laplace, use 
+$\mathcal{L}\{y^\prime\} = sY-y_0$
+$\quad$
+for linear ODE $\dot{\bm x}=A \bm x$, $\bm x=\sum_i c_i \bm v_i e^{\lambda_i t}$
+where $A \bm v = \lambda \bm v$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -427,6 +418,39 @@ Variation of parameters:
 $\frac{d\alpha}{dt} = \frac{\partial\alpha}{\partial v} a_d$
 for orbit element $\alpha$
 
+Fligth path angle:
+$\text{FPA} = \frac{\pi}{2} - \angle (\bm R, \bm V)$
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\subsection{\underline{Optimization}}
+
+$
+\begin{matrix}
+\text{Least-squares} & \text{skinny A} & \text{min} \norm{Ax-y} & 
+	\begin{matrix} x = (A^TA)^{-1}A^Ty \\ x = (A^TWA)^{-1}A^TWy \end{matrix} &
+	W_{ii}=\frac{1}{\sigma_{ii}^2} \quad \text{cov} = P = (A^TWA)^{-1} \\
+\text{Least-norm} & \text{fat A} & \text{min} \norm{x}_{y=Ax} & x = A^T(AA^T)^{-1}y \\
+	&  & \text{min}\norm{Ax-b}_{Cx=d} & 
+	\begin{bmatrix} x \\ \lambda \end{bmatrix} =
+	\begin{bmatrix} A^TA & C^T \\ C & 0 \end{bmatrix}^{-1}
+	\begin{bmatrix} A^Tb \\ d \end{bmatrix}
+\end{matrix}
+$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\underline{Control}}
+
+Root locus:
+$1+K L(s) = 0$ where $L(s)=\frac{b(s)}{a(s)}$
+$\quad \angle L(s) = 180\degree \Rightarrow 
+\sum \psi_{\text{zero}\rightarrow s} - 
+\sum \phi_{\text{pole}\rightarrow s} 
+= 180\degree + 360\degree(l-1)$
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
@@ -452,7 +476,7 @@ $
 =
 \begin{bmatrix} \bm v \\ \frac{1}{m} \sum \bm F 
 \\ \frac{1}{2} \bm q \begin{bmatrix} 0 \\ \bm\omega \end{bmatrix}_{quat}
-\\ \bm I^{-1}(\sum \bm M - \dot{\bm I} \bm\omega - \bm\omega \times \bm I \bm\omega 
+\\ \bm I^{-1}(\sum \bm M - \dot{\bm I} \bm\omega - \bm\omega \times \bm I \bm\omega)
 \end{bmatrix}
 $
 
@@ -536,7 +560,7 @@ $\dot{x} = f(x, u) =
 \begin{bmatrix} v_x \\ v_y \\ a_T(t)\cos\theta \\ 
 a_T(t)\sin\theta - \frac{GM}{{r_y}^2} \end{bmatrix}$;
 $(1) \& (2) \Rightarrow$
-$\tan\theta = \frac{1}{\gamma}\frac{c_2 e^{\gamma t}+c_4 e^{-\gamma t}}{c_1 t + c_3}$
+$\tan\theta = \frac{\frac{c_2}{\gamma}\sinh{\gamma t}+c_4\cosh{\gamma t}}{c_1 t + c_3}$
 with $\gamma = \sqrt{\frac{2GM}{{r_y}^3}}$ 
 for any $\Phi$ or $h$
 

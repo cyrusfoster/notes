@@ -15,4 +15,6 @@ main: $(PDF_LATEX)
           --export-pdf=$(basename $@).pdf \
      	  --export-latex
 
+clean:
+	rm -f svg/*.pdf svg/*.pdf_tex *.pdf *.aux *.log *.out
 
