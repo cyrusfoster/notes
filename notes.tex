@@ -256,7 +256,7 @@ $
 Semi-major axis:
 $
 a
-= r_p + r_a
+= \frac{1}{2}(r_p + r_a)
 = \frac{-\mu}{2 E_y}
 $
 
@@ -339,7 +339,12 @@ r = \dfrac{p}{1+e\cos\nu} = a(1-e\cos E)
 \dot{r} = \dfrac{\sqrt{\mu p} e \sin\nu}{r(1+e\cos\nu)}
 \quad$
 
-Arg of lat: $u = \nu + \omega$
+Arg of lat: 
+$
+\text{arg}_\text{lat} = \nu + \omega
+\quad
+\sin\text{arg}_\text{lat} = \frac{\sin\text{lat}}{\sin\text{inc}}
+$
 $\quad$
 Hyperbolic:
 $
@@ -507,7 +512,7 @@ $
 \begin{bmatrix} \bm r \\ \bm v \\ \bm q \\ \bm \omega \end{bmatrix}}_{13\times1}
 =
 \begin{bmatrix} \bm v \\ \frac{1}{m} \sum \bm F 
-\\ \frac{1}{2} \bm q \begin{bmatrix} 0 \\ \bm\omega \end{bmatrix}_{quat}
+\\ \frac{1}{2} \bm q \begin{bmatrix} 0 \\ \bm\omega \end{bmatrix}_{\text{quat}}
 \\ \bm I^{-1}(\sum \bm M - \dot{\bm I} \bm\omega - \bm\omega \times \bm I \bm\omega)
 \end{bmatrix}
 $
@@ -639,6 +644,7 @@ SVD & $0(7n^3)$ & none
 \import{svg/}{theta_angle.pdf_tex}
 \import{svg/}{theta_angle_offperi.pdf_tex}
 \import{svg/}{stay_elliptical.pdf_tex}
+\import{svg/}{bielliptic.pdf_tex}
 \import{svg/}{inject_templates.pdf_tex}
 \import{svg/}{azimuth.pdf_tex}
 
